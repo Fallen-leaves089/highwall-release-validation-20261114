@@ -1,10 +1,10 @@
-# L5Wall 0.3.0-alpha.1
+# L5Wall 0.3.0
 
-本文件位于临时验证仓库，仅用于演练 L5Wall 的 Alpha 发布通道、独立 GHCR 镜像、provenance attestation 和 `latest` 门禁，不代表正式 L5Wall 发布。
+本文件位于临时验证仓库，仅用于演练 L5Wall 的 Stable 发布通道、独立 GHCR 镜像、provenance attestation、`latest` 镜像门禁和稳定版本发布流程，不代表正式 L5Wall 发布。
 
 发布日期：2026-11-03
 
-L5Wall 0.2.1 是 `0.2.0` 的生命周期修复版本。它是 HighWall 仓库中的 TLS 会话层子项目，拥有独立版本号、测试矩阵、威胁模型、部署说明和发布流。
+本次演练沿用 `0.2.1` 的生命周期修复内容。L5Wall 是 HighWall 仓库中的 TLS 会话层子项目，拥有独立版本号、测试矩阵、威胁模型、部署说明和发布流。
 
 ## 修复
 
@@ -16,17 +16,17 @@ L5Wall 0.2.1 是 `0.2.0` 的生命周期修复版本。它是 HighWall 仓库中
 ## 状态
 
 - 覆盖等级：**C1**，不完整。
-- 成熟度：**Alpha**，未经独立第三方安全审计，非生产就绪。
+- 成熟度：仅 Stable 路径演练，未经独立第三方安全审计，非生产就绪。
 - 运行时只依赖 Python 3.10+ 标准库。
 
 它已经能终止 TLS、执行 SNI/ALPN 白名单、最低 TLS 版本、mTLS、SNI/Host 一致性和有界 H1 转发；没有标准 JA3/JA4、0-RTT 策略、QUIC、H2/H3 检查或握手前 TCP 预算。不要把它描述成完整 L5/L7 防护。
 
 ## 发布产物
 
-- `l5wall-0.2.1-py3-none-any.whl`
-- `l5wall-0.2.1.tar.gz`
+- `l5wall-0.3.0-py3-none-any.whl`
+- `l5wall-0.3.0.tar.gz`
 - `SHA256SUMS`
-- `ghcr.io/fallen-leaves089/l5wall:0.2.1`（`linux/amd64`、`linux/arm64`）
+- `ghcr.io/fallen-leaves089/l5wall:0.3.0`、`latest`（`linux/amd64`、`linux/arm64`）
 
 镜像带 cosign keyless 签名、GitHub provenance 和 SBOM attestation。安装前请校验 `SHA256SUMS`。
 
@@ -34,7 +34,7 @@ L5Wall 0.2.1 是 `0.2.0` 的生命周期修复版本。它是 HighWall 仓库中
 
 ```bash
 python3 -m venv /opt/l5wall
-/opt/l5wall/bin/pip install --no-cache-dir ./l5wall-0.2.1-py3-none-any.whl
+/opt/l5wall/bin/pip install --no-cache-dir ./l5wall-0.3.0-py3-none-any.whl
 /opt/l5wall/bin/l5wall --version
 ```
 

@@ -1,10 +1,10 @@
-# L5Wall 0.3.0-alpha.1
+# L5Wall 0.3.0
 
-This file is in the disposable validation repository and only exercises the L5Wall Alpha channel, isolated GHCR image, provenance attestations, and the `latest` gate. It is not a formal L5Wall release.
+This file is in the disposable validation repository and only exercises the L5Wall Stable channel, isolated GHCR image, provenance attestations, the `latest` image gate, and the stable publishing flow. It is not a formal L5Wall release.
 
 Release date: 2026-11-03
 
-L5Wall 0.2.1 is a lifecycle-reliability patch release for `0.2.0`. It is the TLS session-layer subproject in the HighWall repository, with its own version, test matrix, threat model, deployment guide, and release workflow.
+This rehearsal carries forward the lifecycle-reliability changes from `0.2.1`. L5Wall is the TLS session-layer subproject in the HighWall repository, with its own version, test matrix, threat model, deployment guide, and release workflow.
 
 ## Fixes
 
@@ -16,17 +16,17 @@ L5Wall 0.2.1 is a lifecycle-reliability patch release for `0.2.0`. It is the TLS
 ## Status
 
 - Coverage: **C1**, incomplete.
-- Maturity: **Alpha**, not independently audited, not production-ready.
+- Maturity: Stable-path rehearsal only, not independently audited, not production-ready.
 - Runtime dependency: Python 3.10+ standard library only.
 
 It terminates TLS, enforces SNI/ALPN allowlists, minimum TLS versions, mTLS, SNI/Host consistency, and bounded HTTP/1.1 forwarding. It does not implement standard JA3/JA4, 0-RTT policy, QUIC, H2/H3 inspection, or a pre-handshake TCP budget. Do not describe it as complete L5/L7 protection.
 
 ## Artifacts
 
-- `l5wall-0.2.1-py3-none-any.whl`
-- `l5wall-0.2.1.tar.gz`
+- `l5wall-0.3.0-py3-none-any.whl`
+- `l5wall-0.3.0.tar.gz`
 - `SHA256SUMS`
-- `ghcr.io/fallen-leaves089/l5wall:0.2.1` (`linux/amd64`, `linux/arm64`)
+- `ghcr.io/fallen-leaves089/l5wall:0.3.0` and `latest` (`linux/amd64`, `linux/arm64`)
 
 The image is signed with cosign keyless signing and carries GitHub provenance and SBOM attestations. Verify `SHA256SUMS` before installation.
 
@@ -34,7 +34,7 @@ The image is signed with cosign keyless signing and carries GitHub provenance an
 
 ```bash
 python3 -m venv /opt/l5wall
-/opt/l5wall/bin/pip install --no-cache-dir ./l5wall-0.2.1-py3-none-any.whl
+/opt/l5wall/bin/pip install --no-cache-dir ./l5wall-0.3.0-py3-none-any.whl
 /opt/l5wall/bin/l5wall --version
 ```
 

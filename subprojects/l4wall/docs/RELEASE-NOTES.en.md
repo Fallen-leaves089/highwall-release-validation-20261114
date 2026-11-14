@@ -1,6 +1,6 @@
-# L4Wall 0.2.0-alpha.1
+# L4Wall 0.2.0
 
-This file is in the disposable validation repository and only exercises the L4Wall Alpha channel, PEP 440 version mapping, provenance attestations, and pre-release flags. It is not a formal L4Wall release.
+This file is in the disposable validation repository and only exercises the L4Wall Stable channel, PEP 440 version mapping, provenance attestations, and repository-level `latest` preservation. It is not a formal L4Wall release.
 
 Release date: 2026-11-03
 
@@ -8,36 +8,30 @@ L4Wall is the standalone TCP L4 protection gateway in the HighWall repository. I
 
 ## Release provenance
 
-- This release reuses the exact L4Wall `0.1.0` wheel and sdist from the official `v0.11.0` release. The packages were not rebuilt or modified.
-- The release tag points to the `v0.11.0` source commit `18e9f7e79870681b915fe85fb051a6a06b2378d2`; the assets are the official L4Wall attachments from that release, not a build of the current `main` branch.
-- Later L4Wall changes on `main` are not part of this release, including the subsequent PROXY v2 sender support.
-- The historical sdist retains the `tests/` and `l4wall.egg-info` entries from its original build. They were left unchanged to preserve byte-for-byte compatibility. Future `l4wall-v*` releases will run test, cache, secret, and license checks.
-- The historical assets have no GitHub artifact attestation. This release only states that their SHA-256 digests match the official `v0.11.0` asset records; it does not claim build provenance.
+- This exercise rebuilds the L4Wall `0.2.0` wheel and sdist from the current validation commit.
+- Every release asset has GitHub build provenance and is verified with `gh attestation verify` in the workflow.
+- The release uses the standalone `l4wall-v0.2.0` tag and contains no HighWall, L5Wall, or native-core binaries.
+- The repository's previous `latest` release must not move. If GitHub moves it automatically, the workflow restores and rechecks it.
 
 ## Artifacts
 
-- `l4wall-0.1.0-py3-none-any.whl`
-- `l4wall-0.1.0.tar.gz`
+- `l4wall-0.2.0-py3-none-any.whl`
+- `l4wall-0.2.0.tar.gz`
 - `SHA256SUMS` (these two L4Wall files only)
 
-SHA-256:
-
-```text
-7bbbb9ad244ea5df911c697545e35089a15d3aa470fd4a497709d5d8df9b98bc  l4wall-0.1.0-py3-none-any.whl
-5c5759e2a1f694b5296128622bbc3d31551097988cb1d85adaa1d8af46698dcf  l4wall-0.1.0.tar.gz
-```
+Use the downloaded `SHA256SUMS` for digest verification.
 
 The canonical download location for this standalone release is the **Assets** section of this release. The historical `v0.11.0` page retains the original L4Wall attachments only for old links. L4Wall has no GHCR image, PyPI package, or other download channel, and its packages do not contain HighWall, L5Wall, or native-core binaries.
 
 ## Status
 
-- Version: `0.1.0`
-- Maturity: **Alpha / MVP**
+- Version: `0.2.0`
+- Maturity: Stable release-path exercise only; not independently audited and not production-ready
 - Runtime: Python 3.10+, standard library only
 - Coverage: connection-level TCP protection; no TLS or HTTP payload inspection
 - Audit and production readiness: not independently audited and not production-ready
 
-The historical `v0.11.0` verification record reports 65 passing L4Wall tests. This standalone publication additionally checks artifact hashes, clean virtual-environment installation, the CLI version, and a generated configuration.
+This exercise runs the Python 3.10-3.15 test matrix, static checks, clean virtual-environment installation, CLI version checks, artifact hashes, and provenance verification.
 
 ## Install
 
@@ -46,7 +40,7 @@ Download all three assets, verify them, and install the wheel:
 ```bash
 sha256sum -c SHA256SUMS
 python3 -m venv /opt/l4wall
-/opt/l4wall/bin/pip install --no-cache-dir ./l4wall-0.1.0-py3-none-any.whl
+/opt/l4wall/bin/pip install --no-cache-dir ./l4wall-0.2.0-py3-none-any.whl
 /opt/l4wall/bin/l4wall --version
 /opt/l4wall/bin/l4wall init --path ./config.json
 /opt/l4wall/bin/l4wall check --config ./config.json

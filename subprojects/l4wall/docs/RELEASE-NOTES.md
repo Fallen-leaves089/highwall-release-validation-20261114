@@ -1,6 +1,6 @@
-# L4Wall 0.2.0-alpha.1
+# L4Wall 0.2.0
 
-本文件位于临时验证仓库，仅用于演练 L4Wall 的 Alpha 发布通道、PEP 440 版本映射、provenance attestation 和 pre-release 标志，不代表正式 L4Wall 发布。
+本文件位于临时验证仓库，仅用于演练 L4Wall 的 Stable 发布通道、PEP 440 版本映射、provenance attestation 和仓库级 `latest` 保护，不代表正式 L4Wall 发布。
 
 发布日期：2026-11-03
 
@@ -8,36 +8,30 @@ L4Wall 是 HighWall 仓库中的独立 TCP L4 防护网关，负责连接级准�
 
 ## 发布性质
 
-- 本发布完整复用 `v0.11.0` 官方 Release 中的 L4Wall `0.1.0` wheel 和 sdist，没有重新构建，也没有修改包内容。
-- 发布标签指向 `v0.11.0` 对应源码提交 `18e9f7e79870681b915fe85fb051a6a06b2378d2`；发布资产沿用该 Release 的官方 L4Wall 附件，不来自当前 `main`。
-- `main` 上的后续 L4Wall 改动不属于本发布，包括之后加入的 PROXY v2 发送能力等。
-- 历史 sdist 保留了当时打包的 `tests/` 和 `l4wall.egg-info`；本次为了保持字节一致而没有清理。新的 `l4wall-v*` 发布流会对未来构建执行测试、缓存、密钥和许可证检查。
-- 历史资产没有 GitHub artifact attestation；本发布只声明其 SHA-256 与 `v0.11.0` 官方资产记录一致，不声称存在构建 provenance。
+- 本次演练从当前验证提交重新构建 L4Wall `0.2.0` wheel 和 sdist。
+- 所有发布资产带 GitHub build provenance attestation，并在工作流内通过 `gh attestation verify` 复验。
+- 发布使用独立 `l4wall-v0.2.0` 标签，不包含 HighWall、L5Wall 或原生核心二进制。
+- 发布后必须保持仓库原有 `latest` 不变；即使 GitHub 自动移动 `latest`，工作流也会恢复并再次校验。
 
 ## 发布产物
 
-- `l4wall-0.1.0-py3-none-any.whl`
-- `l4wall-0.1.0.tar.gz`
+- `l4wall-0.2.0-py3-none-any.whl`
+- `l4wall-0.2.0.tar.gz`
 - `SHA256SUMS`（只包含上面两个 L4Wall 文件）
 
-SHA-256：
-
-```text
-7bbbb9ad244ea5df911c697545e35089a15d3aa470fd4a497709d5d8df9b98bc  l4wall-0.1.0-py3-none-any.whl
-5c5759e2a1f694b5296128622bbc3d31551097988cb1d85adaa1d8af46698dcf  l4wall-0.1.0.tar.gz
-```
+SHA-256 以下载的 `SHA256SUMS` 为准。
 
 独立发布的标准下载位置是本 Release 的 **Assets**；旧版 `v0.11.0` 页面仅保留原始 L4Wall 附件以兼容旧链接。L4Wall 不提供 GHCR 镜像、PyPI 包或其他额外下载渠道，也不把 HighWall、L5Wall 或原生核心二进制打进 L4Wall 包。
 
 ## 状态
 
-- 版本：`0.1.0`
-- 成熟度：**Alpha / MVP**
+- 版本：`0.2.0`
+- 成熟度：仅 Stable 发布路径演练，未经独立第三方安全审计，非生产就绪
 - 运行时：Python 3.10+，只依赖标准库
 - 覆盖：TCP 连接级防护；没有 TLS/HTTP 内容检查
 - 审计与生产准入：未经过独立第三方安全审计，不是生产就绪产品
 
-`v0.11.0` 的历史验证记录为 65 项 L4Wall 测试通过。本次独立发布额外复核资产哈希、干净虚拟环境安装、CLI 版本和初始化配置检查。
+本次演练执行 Python 3.10-3.15 测试矩阵、静态检查、干净虚拟环境安装、CLI 版本检查、资产哈希和 provenance 复验。
 
 ## 安装
 
@@ -46,7 +40,7 @@ SHA-256：
 ```bash
 sha256sum -c SHA256SUMS
 python3 -m venv /opt/l4wall
-/opt/l4wall/bin/pip install --no-cache-dir ./l4wall-0.1.0-py3-none-any.whl
+/opt/l4wall/bin/pip install --no-cache-dir ./l4wall-0.2.0-py3-none-any.whl
 /opt/l4wall/bin/l4wall --version
 /opt/l4wall/bin/l4wall init --path ./config.json
 /opt/l4wall/bin/l4wall check --config ./config.json

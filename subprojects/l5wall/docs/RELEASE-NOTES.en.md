@@ -1,4 +1,6 @@
-# L5Wall 0.2.1
+# L5Wall 0.3.0-alpha.1
+
+This file is in the disposable validation repository and only exercises the L5Wall Alpha channel, isolated GHCR image, provenance attestations, and the `latest` gate. It is not a formal L5Wall release.
 
 Release date: 2026-11-03
 

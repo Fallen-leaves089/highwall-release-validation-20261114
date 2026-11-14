@@ -1,4 +1,6 @@
-# L5Wall 0.2.1
+# L5Wall 0.3.0-alpha.1
+
+本文件位于临时验证仓库，仅用于演练 L5Wall 的 Alpha 发布通道、独立 GHCR 镜像、provenance attestation 和 `latest` 门禁，不代表正式 L5Wall 发布。
 
 发布日期：2026-11-03
 

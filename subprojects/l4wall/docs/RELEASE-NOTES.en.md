@@ -1,4 +1,6 @@
-# L4Wall 0.1.0
+# L4Wall 0.2.0-alpha.1
+
+This file is in the disposable validation repository and only exercises the L4Wall Alpha channel, PEP 440 version mapping, provenance attestations, and pre-release flags. It is not a formal L4Wall release.
 
 Release date: 2026-11-03
 

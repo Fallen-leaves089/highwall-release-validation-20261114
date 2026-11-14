@@ -1,4 +1,6 @@
-# L4Wall 0.1.0
+# L4Wall 0.2.0-alpha.1
+
+本文件位于临时验证仓库，仅用于演练 L4Wall 的 Alpha 发布通道、PEP 440 版本映射、provenance attestation 和 pre-release 标志，不代表正式 L4Wall 发布。
 
 发布日期：2026-11-03
 

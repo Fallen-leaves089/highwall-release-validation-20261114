@@ -101,7 +101,7 @@ jobs:
 
       - name: Normalize image reference
         id: image
-        run: echo "name=ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/l5wall" >> "$GITHUB_OUTPUT"
+        run: echo "name=ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/highwall-release-validation-l5wall" >> "$GITHUB_OUTPUT"
 
       - id: meta
         uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302 # v6.2.0

@@ -1,0 +1,72 @@
+name: SBOM normalization smoke
+
+on:
+  push:
+    branches: ["sbom-validation/**"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    name: Generate and normalize / ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-latest]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.12"
+      - name: Install Rust
+        run: |
+          rustup toolchain install 1.97.1 --profile minimal
+          rustup default 1.97.1
+      - name: Install cargo-cyclonedx
+        run: cargo install --locked cargo-cyclonedx --version 0.5.10
+      - name: Generate and normalize SBOM (Linux)
+        if: runner.os == 'Linux'
+        working-directory: subprojects/native-core
+        shell: bash
+        run: |
+          set -euo pipefail
+          stem="highwall-native-core-smoke-${GITHUB_RUN_ID}-linux-x86_64.cdx"
+          cargo cyclonedx --format json --override-filename "$stem" --target x86_64-unknown-linux-gnu
+          source="$(find . -maxdepth 1 -type f -name "${stem}.json" -print -quit)"
+          test -n "$source"
+          destination="$RUNNER_TEMP/${stem}.json"
+          cp "$source" "$destination"
+          python "$GITHUB_WORKSPACE/scripts/normalize_sbom.py" "$destination"
+          if grep -Eq 'file://|/home/runner/|D:/a/|D:\\a\\' "$destination"; then
+            echo "build-host path remains in SBOM" >&2
+            exit 1
+          fi
+          echo "SBOM_PATH=$destination" >> "$GITHUB_ENV"
+      - name: Generate and normalize SBOM (Windows)
+        if: runner.os == 'Windows'
+        working-directory: subprojects/native-core
+        shell: pwsh
+        env:
+          STEM: highwall-native-core-smoke-${{ github.run_id }}-windows-x86_64.cdx
+        run: |
+          cargo cyclonedx --format json --override-filename $env:STEM --target x86_64-pc-windows-msvc
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $source = Get-ChildItem -LiteralPath . -Filter "$env:STEM.json" -File | Select-Object -First 1
+          if ($null -eq $source) { throw "cargo-cyclonedx did not produce $env:STEM.json" }
+          $destination = Join-Path $env:RUNNER_TEMP "$env:STEM.json"
+          Copy-Item -LiteralPath $source.FullName -Destination $destination
+          python (Join-Path $env:GITHUB_WORKSPACE 'scripts/normalize_sbom.py') $destination
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $text = Get-Content -LiteralPath $destination -Raw
+          if ($text -match 'file://|/home/runner/|D:/a/|D:\\a\\') { throw 'build-host path remains in SBOM' }
+          "SBOM_PATH=$destination" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+      - name: Upload normalized SBOM
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: sbom-normalized-${{ matrix.os }}
+          path: ${{ env.SBOM_PATH }}
+          if-no-files-found: error

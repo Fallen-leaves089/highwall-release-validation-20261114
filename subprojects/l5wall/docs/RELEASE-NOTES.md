@@ -1,4 +1,4 @@
-# L5Wall 0.3.0
+# L5Wall 0.3.1
 
 本文件位于临时验证仓库，仅用于演练 L5Wall 的 Stable 发布通道、独立 GHCR 镜像、provenance attestation、`latest` 镜像门禁和稳定版本发布流程，不代表正式 L5Wall 发布。
 
@@ -23,10 +23,10 @@
 
 ## 发布产物
 
-- `l5wall-0.3.0-py3-none-any.whl`
-- `l5wall-0.3.0.tar.gz`
+- `l5wall-0.3.1-py3-none-any.whl`
+- `l5wall-0.3.1.tar.gz`
 - `SHA256SUMS`
-- `ghcr.io/fallen-leaves089/l5wall:0.3.0`、`latest`（`linux/amd64`、`linux/arm64`）
+- `ghcr.io/fallen-leaves089/l5wall:0.3.1`、`latest`（`linux/amd64`、`linux/arm64`）
 
 镜像带 cosign keyless 签名、GitHub provenance 和 SBOM attestation。安装前请校验 `SHA256SUMS`。
 
@@ -34,7 +34,7 @@
 
 ```bash
 python3 -m venv /opt/l5wall
-/opt/l5wall/bin/pip install --no-cache-dir ./l5wall-0.3.0-py3-none-any.whl
+/opt/l5wall/bin/pip install --no-cache-dir ./l5wall-0.3.1-py3-none-any.whl
 /opt/l5wall/bin/l5wall --version
 ```
 

@@ -1,4 +1,4 @@
-# L5Wall 0.3.1
+# L5Wall 0.3.2
 
 This file is in the disposable validation repository and only exercises the L5Wall Stable channel, isolated GHCR image, provenance attestations, the `latest` image gate, and the stable publishing flow. It is not a formal L5Wall release.
 
@@ -23,10 +23,10 @@ It terminates TLS, enforces SNI/ALPN allowlists, minimum TLS versions, mTLS, SNI
 
 ## Artifacts
 
-- `l5wall-0.3.1-py3-none-any.whl`
-- `l5wall-0.3.1.tar.gz`
+- `l5wall-0.3.2-py3-none-any.whl`
+- `l5wall-0.3.2.tar.gz`
 - `SHA256SUMS`
-- `ghcr.io/fallen-leaves089/l5wall:0.3.1` and `latest` (`linux/amd64`, `linux/arm64`)
+- `ghcr.io/fallen-leaves089/l5wall:0.3.2` and `latest` (`linux/amd64`, `linux/arm64`)
 
 The image is signed with cosign keyless signing and carries GitHub provenance and SBOM attestations. Verify `SHA256SUMS` before installation.
 
@@ -34,7 +34,7 @@ The image is signed with cosign keyless signing and carries GitHub provenance an
 
 ```bash
 python3 -m venv /opt/l5wall
-/opt/l5wall/bin/pip install --no-cache-dir ./l5wall-0.3.1-py3-none-any.whl
+/opt/l5wall/bin/pip install --no-cache-dir ./l5wall-0.3.2-py3-none-any.whl
 /opt/l5wall/bin/l5wall --version
 ```
 
